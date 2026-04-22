@@ -26,6 +26,8 @@ import DoctorRecords from './pages/dashboard/doctor/Records';
 // Admin Pages
 import AdminOverview from './pages/dashboard/admin/Overview';
 import AdminUsers from './pages/dashboard/admin/Users';
+import AIModelMonitor from './pages/dashboard/admin/AIModelMonitor';
+import SystemReports from './pages/dashboard/admin/SystemReports';
 
 // Shared Pages
 import Profile from './pages/dashboard/shared/Profile';
@@ -151,8 +153,8 @@ function App() {
             <Route path="/admin" element={<ProtectedRoute role="ADMIN"><DashboardLayout role="ADMIN" /></ProtectedRoute>}>
               <Route index element={<AdminOverview />} />
               <Route path="users" element={<AdminUsers />} />
-              <Route path="ai" element={<PlaceholderPage title="AI Model Monitor" />} />
-              <Route path="reports" element={<PlaceholderPage title="System Reports" />} />
+              <Route path="ai" element={<AIModelMonitor />} />
+              <Route path="reports" element={<SystemReports />} />
               <Route path="settings" element={<Settings />} />
             </Route>
 
