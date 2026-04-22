@@ -1,4 +1,4 @@
-# 🏥 AI Healthcare Prediction System
+https://github.com/drhasnain751/AI-Health-Prediction.git# 🏥 AI Healthcare Prediction System
 
 A full-stack healthcare web application with AI-powered disease prediction. Built with **React**, **Node.js**, **Prisma/SQLite**, and a **Python Scikit-Learn Random Forest** ML model.
 
