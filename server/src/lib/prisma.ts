@@ -4,8 +4,10 @@ import path from 'path';
 
 let prisma: PrismaClient;
 
-if (process.env.NODE_ENV === 'production') {
-  // Try multiple possible locations for the bundled database
+const tmpPath = '/tmp/dev.db';
+
+// Copy logic
+if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
   const possiblePaths = [
     path.join(process.cwd(), 'server', 'prisma', 'dev.db'),
     path.join(process.cwd(), 'prisma', 'dev.db'),
@@ -21,15 +23,12 @@ if (process.env.NODE_ENV === 'production') {
     }
   }
 
-  const tmpPath = '/tmp/dev.db';
-
   try {
     if (dbPath && !fs.existsSync(tmpPath)) {
       fs.copyFileSync(dbPath, tmpPath);
-      console.log(`Database copied from ${dbPath} to ${tmpPath}`);
     }
   } catch (err) {
-    console.error('Failed to copy database to /tmp:', err);
+    console.error('Copy Error:', err);
   }
 
   prisma = new PrismaClient({
@@ -40,7 +39,6 @@ if (process.env.NODE_ENV === 'production') {
     },
   });
 } else {
-  // Local development
   prisma = new PrismaClient();
 }
 

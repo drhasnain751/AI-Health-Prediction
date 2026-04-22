@@ -46,6 +46,16 @@ app.get('/api/health', (req: Request, res: Response) => {
   });
 });
 
+// Global Error Handler
+app.use((err: any, req: Request, res: Response, next: any) => {
+  console.error('Unhandled Error:', err);
+  res.status(500).json({ 
+    error: 'Internal Server Error', 
+    message: err.message,
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack 
+  });
+});
+
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
