@@ -1,0 +1,23 @@
+{
+  "name": "ai-healthcare-prediction-system",
+  "version": "1.0.0",
+  "description": "AI Healthcare Prediction System - Full Stack",
+  "scripts": {
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "build:all": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "start": "npm run start:server",
+    "start:server": "cd server && npm start",
+    "dev": "npm run dev:both",
+    "dev:both": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\"",
+    "deploy:both": "npm run build:all && echo 'Ready for Vercel deployment'",
+    "test": "echo \"No tests specified\""
+  },
+  "keywords": ["healthcare", "ai", "prediction", "fullstack"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

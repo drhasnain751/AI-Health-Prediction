@@ -1,62 +1,121 @@
 # Vercel Deployment Guide
 
-## Deployment Steps
+## Quick Start: Consecutive Deployment (Recommended)
 
-### 1. Deploy Frontend (React)
+### Step 1: Deploy Backend First
 1. Go to https://vercel.com/new
-2. Click "Select" under Vite/React template
-3. Connect your GitHub repository `AI-Health-Prediction`
-4. Configure:
+2. Select your GitHub repository
+3. **Configure:**
+   - **Project Name:** `ai-healthcare-backend`
+   - **Root Directory:** `server`
+   - **Build Command:** `npm run build`
+   - **Start Command:** `node dist/index.js`
+4. **Environment Variables:**
+   ```
+   DATABASE_URL=your_database_url
+   JWT_SECRET=your_jwt_secret
+   NODE_ENV=production
+   ```
+5. Click **Deploy** ✓
+6. **Copy the backend URL** (e.g., `https://ai-healthcare-backend.vercel.app`)
+
+### Step 2: Deploy Frontend
+1. Go to https://vercel.com/new
+2. Select the **same repository**
+3. **Configure:**
    - **Project Name:** `ai-healthcare-frontend`
-   - **Framework Preset:** Vite
    - **Root Directory:** `client`
    - **Build Command:** `npm run build`
    - **Output Directory:** `dist`
-   - **Install Command:** `npm install`
-5. Add Environment Variables:
+4. **Environment Variables:**
    ```
-   VITE_API_URL=https://your-backend-domain.vercel.app
+   VITE_API_URL=https://ai-healthcare-backend.vercel.app
    ```
-6. Click **Deploy**
+   (Use the backend URL from Step 1)
+5. Click **Deploy** ✓
 
-### 2. Deploy Backend (Node.js)
+### Step 3: Verify Deployment
+- Frontend: `https://ai-healthcare-frontend.vercel.app`
+- Backend: `https://ai-healthcare-backend.vercel.app/api/health`
+
+---
+
+## Alternative: Monorepo Single Project (Advanced)
+
+If you want both in ONE Vercel project:
+
 1. Go to https://vercel.com/new
-2. Select your repository again
-3. Configure:
-   - **Project Name:** `ai-healthcare-backend`
-   - **Root Directory:** `server`
-   - **Framework:** Node.js
-   - **Build Command:** `npm run build`
-   - **Install Command:** `npm install`
-   - **Start Command:** `node dist/index.js`
-4. Add Environment Variables:
-   ```
-   DATABASE_URL=your_database_connection_string
-   JWT_SECRET=your_jwt_secret_key
-   NODE_ENV=production
-   CORS_ORIGIN=https://your-frontend-domain.vercel.app
-   ```
-5. Click **Deploy**
+2. Select repository
+3. **Configure:**
+   - **Framework Preset:** "Other"
+   - **Root Directory:** `.` (root)
+   - **Build Command:** `npm run build:all`
+   - **Install Command:** `npm run install:all`
 
-## Important Notes
+This approach builds both but requires custom Vercel configuration.
 
-- Update `VITE_API_URL` in frontend with actual backend URL after backend deploys
-- Update `CORS_ORIGIN` in backend with actual frontend URL after frontend deploys
-- Database: The SQLite in `/server` will not persist on Vercel. For production:
-  - Use PostgreSQL or MongoDB instead
-  - Update Prisma schema datasource
-  - Set `DATABASE_URL` environment variable
+---
 
-## Alternative: Monorepo Deployment
+## Production Database Setup
 
-If you want both to deploy from one Vercel project (monorepo approach):
-1. Use the root `vercel.json` with `projects` configuration
-2. Deploy entire repo as one project
-3. Vercel will automatically handle both subdirectories
+⚠️ **Important:** SQLite database will NOT persist on Vercel
 
-## Post-Deployment
+### Switch to PostgreSQL:
 
-1. Test frontend at: `https://your-frontend-domain.vercel.app`
-2. Test backend API at: `https://your-backend-domain.vercel.app/api/health`
-3. Update frontend API URL if different from expected
-4. Set up database migration on Vercel (Prisma seed/migrate)
+1. Update `server/prisma/schema.prisma`:
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+
+2. Use PostgreSQL provider:
+   - Railway.app
+   - Render
+   - Supabase
+   - AWS RDS
+
+3. Set `DATABASE_URL` in Vercel environment variables
+
+### Run migrations on Vercel:
+```bash
+npx prisma migrate deploy
+npx prisma db seed
+```
+
+---
+
+## Environment Variables Summary
+
+### Backend (`server`)
+```
+DATABASE_URL=postgresql://user:pass@host/db
+JWT_SECRET=your_secret_key_here
+NODE_ENV=production
+CORS_ORIGIN=https://your-frontend.vercel.app
+PORT=5000
+```
+
+### Frontend (`client`)
+```
+VITE_API_URL=https://your-backend.vercel.app
+```
+
+---
+
+## Troubleshooting
+
+**Issue:** Frontend can't reach backend
+- Check `VITE_API_URL` environment variable
+- Ensure backend `CORS_ORIGIN` includes frontend URL
+- Verify backend is deployed and responding
+
+**Issue:** Database not seeding
+- SSH into Vercel and run `npx prisma db seed`
+- Or use Railway/Supabase dashboard
+
+**Issue:** Build fails
+- Check Node.js version matches (18+)
+- Run `npm run build:all` locally to test
+- Check git push for all changes

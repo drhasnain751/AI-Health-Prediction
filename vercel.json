@@ -1,17 +1,8 @@
 {
-  "projects": [
-    {
-      "name": "ai-healthcare-frontend",
-      "rootDirectory": "client",
-      "buildCommand": "npm run build",
-      "outputDirectory": "dist",
-      "installCommand": "npm install"
-    },
-    {
-      "name": "ai-healthcare-backend",
-      "rootDirectory": "server",
-      "buildCommand": "npm run build",
-      "installCommand": "npm install"
-    }
-  ]
+  "buildCommand": "npm run build:all",
+  "installCommand": "npm run install:all",
+  "env": {
+    "FRONTEND_BUILD": "cd client && npm run build",
+    "BACKEND_BUILD": "cd server && npm run build"
+  }
 }
