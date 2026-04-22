@@ -75,6 +75,15 @@ export const login = async (req: Request, res: Response) => {
 
     res.json({ token, user: { id: user.id, name: user.name, role: user.role, profileId: user.patientProfile?.id || user.doctorProfile?.id } });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    console.error('Login Error Details:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code
+    });
+    res.status(500).json({ 
+      error: 'Internal Server Error', 
+      details: error.message,
+      code: error.code
+    });
   }
 };
