@@ -1,105 +1,38 @@
-https://github.com/drhasnain751/AI-Health-Prediction.git# 🏥 AI Healthcare Prediction System
+# 🏥 AI Healthcare Prediction System
 
-A full-stack healthcare web application with AI-powered disease prediction. Built with **React**, **Node.js**, **Prisma/SQLite**, and a **Python Scikit-Learn Random Forest** ML model.
+A professional MERN-stack platform integrated with Machine Learning to provide predictive healthcare analytics. This system allows patients to predict diseases based on symptoms, doctors to manage patient records, and admins to monitor system-wide AI performance.
 
----
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ai-health-prediction-system-omega.vercel.app)
 
-## 🚀 Quick Start (VS Code)
+## ✨ Key Features
 
-### 1. Install Prerequisites
-- [Node.js 18+](https://nodejs.org)
-- [Python 3.8+](https://python.org)
+*   **🤖 AI Disease Prediction**: Real-time risk assessment using Random Forest ML models.
+*   **👨‍⚕️ Doctor Dashboard**: Manage patient records, appointments, and medical history.
+*   **📊 Admin Command Center**: Monitor AI model accuracy, system health, and user growth.
+*   **🔒 Secure Auth**: Role-based access control (RBAC) with JWT encryption.
+*   **🌓 Dark/Light Mode**: Fully responsive, premium UI design.
 
-### 2. Install Python ML Dependencies
-```bash
-pip install scikit-learn joblib pandas numpy
-```
+## 🚀 Quick Start (Local)
 
-### 3. Setup Backend
-```bash
-cd server
-npm install
-npx prisma generate
-npx prisma migrate dev --name init
-npx ts-node prisma/seed.ts
-```
+1.  **Clone**: `git clone https://github.com/drhasnain751/AI-Health-Prediction.git`
+2.  **Install**: `npm run install:all`
+3.  **Setup Database**: `cd server && npx prisma db push && npx prisma db seed`
+4.  **Train AI**: `cd server/src/ml && python train.py`
+5.  **Run**: `npm run dev` (from root)
 
-### 4. Setup Frontend
-```bash
-cd client
-npm install
-```
+## 📚 Detailed Instructions
 
-### 5. Run the App (open 2 terminals in VS Code)
+For a full step-by-step setup guide with screenshots and requirements, please refer to:
+👉 **[SETUP_GUIDE.md](./SETUP_GUIDE.md)**
 
-**Terminal 1 — Backend:**
-```bash
-cd server
-npm run dev
-# Starts at: http://localhost:5000
-```
+## 🛠️ Technology Stack
 
-**Terminal 2 — Frontend:**
-```bash
-cd client
-npm run dev
-# Starts at: http://localhost:3000
-```
-
-### 6. Open in Browser
-```
-http://localhost:3000
-```
+*   **Frontend**: React, Vite, TypeScript, Lucide Icons, CSS3.
+*   **Backend**: Node.js, Express, Prisma ORM.
+*   **Database**: SQLite (Local) / PostgreSQL (Production).
+*   **AI/ML**: Python, Scikit-Learn, Pandas.
+*   **Deployment**: Vercel.
 
 ---
 
-## 🔑 Default Login Credentials
-
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | `admin@healthai.com` | `password123` |
-| Doctor | `doctor@healthai.com` | `password123` |
-| Patient | `patient@healthai.com` | `password123` |
-
----
-
-## 🤖 How the AI Works
-
-1. Patient selects symptoms from a list
-2. React sends symptoms array to `POST /api/predict`
-3. Backend spawns a Python subprocess running `predict.py`
-4. Python loads the pre-trained `disease_model.pkl` (Random Forest)
-5. Model predicts disease + confidence score
-6. Result saved to SQLite database and returned to UI
-
----
-
-## 📁 Project Structure
-
-```
-AI Healthcare Prediction System/
-├── client/          ← React + TypeScript frontend (Vite)
-└── server/          ← Node.js + Express backend
-    ├── prisma/      ← Database schema + seed
-    └── src/
-        ├── ml/      ← Python prediction script + .pkl models
-        ├── routes/  ← API routes
-        └── controllers/
-```
-
----
-
-## 🛠 Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, TypeScript, Vite, React Router v6 |
-| Backend | Node.js, Express 5, TypeScript |
-| Database | SQLite via Prisma ORM |
-| Auth | JWT (jsonwebtoken) + bcryptjs |
-| ML | Python, Scikit-Learn Random Forest, joblib |
-
----
-
-## 📖 Full Documentation
-See [PROJECT_DOCUMENTATION.md](./PROJECT_DOCUMENTATION.md) for complete API reference, database schema, folder structure, and architecture diagrams.
+**Built by [Dr. Hasnain](https://github.com/drhasnain751)**
