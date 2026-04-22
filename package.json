@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "AI Healthcare Prediction System - Full Stack",
   "scripts": {
+    "postinstall": "cd client && npm install && cd ../server && npm install",
     "install:all": "npm install && cd client && npm install && cd ../server && npm install",
     "build": "npm run build:all",
     "build:all": "npm run build:client && npm run build:server",
-    "build:client": "cd client && npm run build && cd .. && rm -rf public && cp -r client/dist public",
+    "build:client": "cd client && npm run build && cd .. && rm -rf public && mkdir public && cp -a client/dist/. public/",
     "build:server": "cd server && npm run build",
     "start": "npm run start:server",
     "start:server": "cd server && npm start",
