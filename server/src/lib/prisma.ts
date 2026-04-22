@@ -5,14 +5,28 @@ import path from 'path';
 let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === 'production') {
-  // Vercel Hack: Copy the database file to /tmp so it's writable
-  const dbPath = path.join(process.cwd(), 'prisma', 'dev.db');
+  // Try multiple possible locations for the bundled database
+  const possiblePaths = [
+    path.join(process.cwd(), 'server', 'prisma', 'dev.db'),
+    path.join(process.cwd(), 'prisma', 'dev.db'),
+    path.join(__dirname, '..', 'prisma', 'dev.db'),
+    path.join(__dirname, '..', '..', 'prisma', 'dev.db')
+  ];
+
+  let dbPath = '';
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      dbPath = p;
+      break;
+    }
+  }
+
   const tmpPath = '/tmp/dev.db';
 
   try {
-    if (fs.existsSync(dbPath) && !fs.existsSync(tmpPath)) {
+    if (dbPath && !fs.existsSync(tmpPath)) {
       fs.copyFileSync(dbPath, tmpPath);
-      console.log('Database copied to /tmp');
+      console.log(`Database copied from ${dbPath} to ${tmpPath}`);
     }
   } catch (err) {
     console.error('Failed to copy database to /tmp:', err);

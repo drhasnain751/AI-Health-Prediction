@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import fs from 'fs';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
@@ -36,7 +37,13 @@ app.use('/api/doctors', doctorRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.get('/api/health', (req: Request, res: Response) => {
-  res.json({ status: 'OK', message: 'Healthcare System API is running' });
+  res.json({ 
+    status: 'OK', 
+    message: 'Healthcare System API is running',
+    environment: process.env.NODE_ENV,
+    vercel: !!process.env.VERCEL,
+    db_file_exists: fs.existsSync('/tmp/dev.db')
+  });
 });
 
 if (!process.env.VERCEL) {
