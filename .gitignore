@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+prisma/dev.db
+prisma/migrations/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+ENV/
+
+# ML Model artifacts (keep .pkl if trained; remove if re-training on build)
+# server/src/ml/models/*.pkl
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+*.suo
+*.user
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+
+# Coverage
+coverage/
+.nyc_output

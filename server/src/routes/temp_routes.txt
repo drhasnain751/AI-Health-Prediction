@@ -1,0 +1,22 @@
+// patient.ts
+import { Router } from 'express';
+import { getPatientDashboard } from '../controllers/patient';
+const patientRouter = Router();
+patientRouter.get('/:patientId', getPatientDashboard);
+export { patientRouter };
+
+// doctor.ts
+import { Router } from 'express';
+import { getAllPatients, getPatientDetails } from '../controllers/doctor';
+const doctorRouter = Router();
+doctorRouter.get('/', getAllPatients);
+doctorRouter.get('/:id', getPatientDetails);
+export { doctorRouter };
+
+// admin.ts
+import { Router } from 'express';
+import { getSystemStats, getAllUsers } from '../controllers/admin';
+const adminRouter = Router();
+adminRouter.get('/stats', getSystemStats);
+adminRouter.get('/users', getAllUsers);
+export { adminRouter };

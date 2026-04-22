@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   // "PATIENT", "DOCTOR", "ADMIN"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patientProfile PatientProfile?
+  doctorProfile  DoctorProfile?
+}
+
+model PatientProfile {
+  id             String   @id @default(uuid())
+  age            Int
+  gender         String
+  medicalHistory String?
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+
+  predictions    Prediction[]
+  records        MedicalRecord[]
+  appointments   Appointment[]
+  medications    Medication[]
+  labResults    LabResult[]
+  notifications Notification[]
+}
+
+model DoctorProfile {
+  id             String   @id @default(uuid())
+  specialization String?
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+
+  records        MedicalRecord[]
+}
+
+model Prediction {
+  id              String   @id @default(uuid())
+  symptoms        String   // JSON stringified list of symptoms
+  disease         String
+  riskScore       Float
+  confidence      Float
+  recommendations String
+  patientId       String
+  patient         PatientProfile @relation(fields: [patientId], references: [id])
+  createdAt       DateTime @default(now())
+}
+
+model MedicalRecord {
+  id          String   @id @default(uuid())
+  notes       String
+  date        DateTime @default(now())
+  patientId   String
+  doctorId    String
+  patient     PatientProfile @relation(fields: [patientId], references: [id])
+  doctor      DoctorProfile  @relation(fields: [doctorId], references: [id])
+}
+
+model Medication {
+  id        String   @id @default(uuid())
+  name      String
+  dosage    String
+  frequency String
+  patientId String
+  patient   PatientProfile @relation(fields: [patientId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Appointment {
+  id        String   @id @default(uuid())
+  date      DateTime
+  reason    String
+  status    String   // "SCHEDULED", "COMPLETED", "CANCELLED"
+  patientId String
+  doctorId  String
+  patient   PatientProfile @relation(fields: [patientId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model LabResult {
+  id        String   @id @default(uuid())
+  testName  String
+  result    String
+  unit      String?
+  range     String?
+  patientId String
+  patient   PatientProfile @relation(fields: [patientId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  patientId String
+  patient   PatientProfile @relation(fields: [patientId], references: [id])
+  createdAt DateTime @default(now())
+}

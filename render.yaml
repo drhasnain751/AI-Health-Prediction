@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: ai-healthcare-api
+    runtime: node
+    rootDir: server
+    buildCommand: >
+      npm install &&
+      npm run build &&
+      pip install -r requirements.txt &&
+      npx prisma generate &&
+      npx prisma migrate deploy
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: PYTHON_PATH
+        value: python3
