@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/layout/Sidebar';
 import { Search, User, MoreVertical, ExternalLink, Calendar } from 'lucide-react';
-import api from '../../lib/api';
+import api from '../lib/api';
 
 const DoctorDashboard = () => {
   const [patients, setPatients] = useState<any[]>([]);

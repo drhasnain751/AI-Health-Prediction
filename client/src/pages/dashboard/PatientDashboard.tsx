@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/layout/Sidebar';
 import { Activity, History, Calendar, Heart, ShieldCheck } from 'lucide-react';
-import api from '../../lib/api';
+import api from '../lib/api';
 
 const PatientDashboard = () => {
   const [data, setData] = useState<any>(null);

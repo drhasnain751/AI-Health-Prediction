@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Users, Activity, Shield, TrendingUp, Server, Cpu, AlertTriangle, CheckCircle, Download, RefreshCw, UserPlus, Settings } from 'lucide-react';
-import api from '../../lib/api';
+import api from '../../../lib/api';
 import { useNavigate } from 'react-router-dom';
 
 const AdminOverview = () => {

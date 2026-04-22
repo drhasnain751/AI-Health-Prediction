@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/layout/Sidebar';
 import { Users, Activity, PieChart, Shield, Search, MoreHorizontal } from 'lucide-react';
-import api from '../../lib/api';
+import api from '../lib/api';
 
 const AdminDashboard = () => {
   const [data, setData] = useState<any>(null);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Search, User, Mail, Shield, Trash2, Edit2, Filter, MoreVertical } from 'lucide-react';
-import api from '../../lib/api';
+import api from '../../../lib/api';
 
 const AdminUsers = () => {
   const [data, setData] = useState<any>(null);
